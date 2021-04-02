@@ -1,25 +1,39 @@
+import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
-function App() {
+export default function App(props) {
+  const { is_server, is_fetching, model } = props;
+  //you can check if it's fetching for loading or fallback data
+  if(is_fetching)
+    return <div>Loading...</div>
+
   return (
     <div className="App">
-      <header className="App-header">
+      {/*suppressHydrationWarning is need only if you are using lazy for code-split */}
+      <header className="App-header" suppressHydrationWarning={true}>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        {props.children}
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href={model.link}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {model.message}
         </a>
       </header>
     </div>
   );
 }
 
-export default App;
+export async function fetch(request, reply){
+  //code here will be pre-fetched for SSR or navegation
+  //Ex: return await axios.get('/api/header_data', { baseURL: request.origin });
+
+  //Mock data just for showing :D
+  return  {
+    link: 'https://ciro.spaciari.com/react-renderer',
+    message: 'Learn more about @react-renderer/router'
+  }
+}
