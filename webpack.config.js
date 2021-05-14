@@ -152,7 +152,8 @@ module.exports = {
         filename: 'static/js/[name].[fullhash].js',
         chunkFilename: 'static/js/[id].[chunkhash].js',
         path: path.resolve(__dirname, 'build'),
-        clean: true
+        clean: true,
+        publicPath: '/'
     },
     watch: mode === 'development',
     devtool: mode === 'development' ? 'eval-source-map' : undefined,
